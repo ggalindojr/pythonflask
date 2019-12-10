@@ -1,0 +1,46 @@
+body{
+    background-color: black;
+    color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin: 0;
+}
+ul.demo {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100px;
+    box-sizing: border-box;
+    background-color: #232323;
+}
+ul li {
+    display: flex; /* allows align-items to work below */
+    justify-content: center; /* Horizontally centers single-line elements */
+    text-align: center; /* Horizontally centers text within line-wrapped elements */
+    align-items: center; /* vertical */
+    border: 1px solid black;
+    padding: 2px 10px;
+    margin: 2px 2px;
+    transition: .5s;
+}
+
+div.fixed {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 0px 0px 0px 5px;
+    width: 75px;
+    border: 3px solid #73AD21;
+}
+
+a.linkbtn {
+    position: fixed;
+    top: 0;
+    right: 0;
+    /* padding: 0px 0px 0px 5px;
+    width: 75px;
+    border: 3px solid #73AD21; */
+}
+
+div#txt {
+    font-size: 50px;
+}

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-Br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Socket02</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body onload="startTime()">
+
+    <a href="{{ url_for('dash') }}" class="btn btn-primary linkbtn" role="button">Dashboard</a>
+
+    <div id="txt" class="fixed"></div>
+    <div id="tagtest"></div>
+
+    <!-- <h3 style='color: #ccc;font-size: 30px;'>No message yet..</h3>
+    <div class="message_holder"></div> -->
+
+    <ul class="demo">
+        <!-- <li class="objeto" style="background-color: #B22222;"></li> -->
+        <li class="demo2"></li>
+    </ul>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js" charset="utf-8"></script>
+    <script>
+        $(document).ready(function () {
+
+            var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+            socket.on('connect', function () {
+                socket.emit('my event', { data: 'Estou conectado!' });
+            });
+
+            socket.on('my response', function (msg) {
+                if (typeof msg.ultimo !== 'undefined') {
+                    $('ul.demo').append('<li style="background-color: Green;">' + msg.ultimo + '</li>');
+                }
+                /* if (typeof msg.dadosC !== 'undefined') {
+                    $('ul.demo').append('<li style="background-color: DarkBlue;">' + msg.dadosC + '</li>');
+                } */
+            });
+
+            socket.on('messageS', function (data) {
+                var d = new Date();
+                var seg = d.getSeconds();
+                console.log(data, seg);
+            });
+
+            setInterval(function () {
+                socket.emit('messageC', 15);
+            }, 500);
+
+        });
+
+
+        function startTime() {
+            var today = new Date();
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+            // add a zero in front of numbers<10
+            // m = checkTime(m);
+            s = checkTime(s);
+
+            document.getElementById("txt").innerHTML = s;
+            var t = setTimeout(function () { startTime() }, 500);
+        }
+
+        function checkTime(i) {
+            if (i < 10) {
+                i = "0" + i;
+            }
+            return i;
+        }
+
+        /* setTime();
+        function setTime() {
+            var date = new Date().getTime();
+            var string = "Timestamp: " + date;
+            setTimeout(setTime, 3000);
+            $('#setTime').html(string);
+        } */
+
+    </script>
+</body>
+
+</html>
